@@ -47,10 +47,9 @@ It exists to answer:
 
 StatSync plays nicely with:
 
-- **PaperMC**
 - **CommandPanels** (data storage + GUI rendering)
 - **Floodgate** (Bedrock platform detection)
-- **Scoreboard-based economies** (Beans, etc.)
+- **Scoreboard-based economies** (Beans, $, etc.)
 
 Optional / future-facing integrations:
 - CoreProtect (recent activity signals)
