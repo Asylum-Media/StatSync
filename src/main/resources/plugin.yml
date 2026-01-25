@@ -1,0 +1,22 @@
+name: StatSync
+version: '0.1.9-SNAPSHOT'
+main: org.asylum_media.statsync.StatSync
+api-version: '1.21'
+authors: [ Asylum_Media ]
+description: Data parser for PaperMC server staff use.
+softdepend:
+  - PlaceholderAPI
+  - Floodgate
+  - SessionStats
+  - PlayerStats
+  - UJobs
+  - AFK
+  - PunisherX
+commands:
+  statsync:
+    description: Resolve and sync target player stats
+    usage: /statsync context <player>
+    permission: statsync.use
+permissions:
+  statsync.use:
+    default: op
