@@ -16,7 +16,7 @@ It snapshots:
 
 - Player platform (Java / Bedrock device via Floodgate)
 - Economy balance from a configurable scoreboard objective
-- Session delta (Beans gained or lost since join / enable)
+- Session delta (Beans/$ gained or lost since join / enable)
 - Additional context hooks (AFK state, CoreProtect, jobs, etc. — expandable)
 
 All data is:
