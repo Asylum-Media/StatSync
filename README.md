@@ -67,19 +67,19 @@ economy:
 ```
 ## 🧪 **Usage**
 Command
-/statsync context <player>
+`/statsync context <player>`
 
 **What it does**
 
-Resolves the target player
-Snapshots live data (platform, economy, session delta)
-Writes values into CommandPanels data for the staff member running the command
+- Resolves the target player
+- Snapshots live data (platform, economy, session delta)
+- Writes values into CommandPanels data for the staff member running the command
 
 **Example keys written:**
 
-ccm_target_platform
-ccm_target_beans_current
-ccm_target_beans_session
+- ccm_target_platform
+- ccm_target_beans_current
+- ccm_target_beans_session
 
 
 These are intended to be consumed by CommandPanels, not chat.
@@ -92,11 +92,11 @@ Staff enters a player name (dialog panel)
 
 **CommandPanels clears old context:**
 
-/pa data clear <staff>
+`/pa data clear <staff>`
 
 **StatSync snapshots new context:**
 
-/statsync context <target>
+`/statsync context <target>`
 
 **A read-only info panel opens and displays the data**
 
@@ -108,15 +108,15 @@ StatSync tracks session-based changes, not historical totals.
 
 This allows staff to see:
 
-Whether currency changed during this session
-Rough scale of activity
-Whether something looks worth reviewing
+- Whether currency changed during this session
+- Rough scale of activity
+- Whether something looks worth reviewing
 
 _It deliberately avoids:_
 
-Attribution guessing
-Accusatory language
-Persistent tracking
+- Attribution guessing
+- Accusatory language
+- Persistent tracking
 
 This follows a law-of-averages moderation philosophy.
 
@@ -125,47 +125,48 @@ This follows a law-of-averages moderation philosophy.
 StatSync does not manage permissions itself.
 Restrict usage via:
 
-Your permissions plugin (LuckPerms, etc.)
-CommandPanels access control
+- Your permissions plugin (LuckPerms, etc.)
+- CommandPanels access control
 
 ## 🧩 **Philosophy**
 
 _StatSync is not:_
 
-An anti-cheat
-A logging system
-A replacement for CoreProtect or moderation tools
+- An anti-cheat
+- A logging system
+- A replacement for CoreProtect or moderation tools
 
 _It is:_
 
-A context engine
-A glue layer
-A staff quality-of-life tool
+- A context engine
+- A glue layer
+- A staff quality-of-life tool
 Designed for adult communities, cross-play servers, and staff who value clarity over noise.
 
 ## 📦 **Building**
 
 _StatSync is built with Gradle and targets:_
 
-Java 21
-Paper 1.21+
-Floodgate API (optional, soft-depend)
+- Java 21
+- Paper 1.21+
+- Floodgate API (optional, soft-depend)
 
 Standard Gradle build:
 
-./gradlew build
+`./gradlew build`
 
 ## 🧡 **Credits**
 
 Developed by Asylum-Media
+
 Built for real-world server administration, not theorycraft.
 
 _Inspired by:_
 
-Practical moderation needs
-Scoreboard-authoritative economies
-Clean separation of concerns
-_Julie Tapia_ 🧡
+- Practical moderation needs
+- Scoreboard-authoritative economies
+- Clean separation of concerns
+- _Julie Tapia_ 🧡
 
 ## 📄 **Licence**
 
@@ -173,12 +174,12 @@ MIT — do what you like, _just don’t pretend you wrote it_ 😉
 
 ## 🚧 **Status**
 
-StatSync is actively evolving alongside its host servers.
+- StatSync is actively evolving alongside its host servers.
 
 _**Expect:**_
 
-Incremental features
-Strong backwards compatibility
-No rushed bloat
+- Incremental features
+- Strong backwards compatibility
+- No rushed bloat
 
 PRs and discussion welcome.
