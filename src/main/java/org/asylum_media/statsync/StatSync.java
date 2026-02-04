@@ -35,7 +35,7 @@ public final class StatSync extends JavaPlugin {
             getLogger().warning("Floodgate not found. Platform data will be unavailable.");
         }
 
-        // ✅ Register session tracking listener
+        // Register session tracking listener
         getServer().getPluginManager().registerEvents(new Listener() {
 
             @EventHandler
@@ -45,7 +45,7 @@ public final class StatSync extends JavaPlugin {
             }
 
         }, this);
-        // ✅ Seed session baseline for already-online players
+        // Seed session baseline for already-online players
         for (Player player : Bukkit.getOnlinePlayers()) {
             int beans = getScoreboardValue(beansObjective, player);
             sessionBeansStart.put(player.getUniqueId(), beans);
@@ -70,10 +70,9 @@ public final class StatSync extends JavaPlugin {
             staff.sendMessage("Player not found or not online.");
             return true;
         }
-
+       // Platform Detection
         String platform = "Java";
 
-        // Floodgate check MUST be UUID-based
         try {
             UUID uuid = target.getUniqueId();
             FloodgateApi api = FloodgateApi.getInstance();
@@ -104,7 +103,6 @@ public final class StatSync extends JavaPlugin {
 
         setCPData(staff, "ccm_target_platform", platform);
         staff.sendMessage("§e[StatSync] §7Context synced for §f" + target.getName());
-
         return true;
     }
 
