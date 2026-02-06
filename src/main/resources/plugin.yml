@@ -1,5 +1,5 @@
 name: StatSync
-version: '0.1.12-SNAPSHOT'
+version: '0.1.13-SNAPSHOT'
 main: org.asylum_media.statsync.StatSync
 api-version: '1.21'
 authors: [ Asylum_Media ]
