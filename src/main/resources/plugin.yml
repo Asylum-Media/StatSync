@@ -1,16 +1,16 @@
 name: StatSync
-version: '0.1.14-SNAPSHOT'
+version: '0.1.15-SNAPSHOT'
 main: org.asylum_media.statsync.StatSync
 api-version: '1.21'
 authors: [ Asylum_Media ]
 description: Data parser for PaperMC server staff use.
 softdepend:
-  - PlaceholderAPI
+  - BeanSync
+  - AfkSync
   - Floodgate
   - SessionStats
   - PlayerStats
   - UJobs
-  - AFK
   - PunisherX
 commands:
   statsync:

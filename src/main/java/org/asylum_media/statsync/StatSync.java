@@ -31,6 +31,12 @@ public final class StatSync extends JavaPlugin {
         saveDefaultConfig();
         // Core Punishment Manager
         this.punishmentManager = new PunishmentManager();
+        var punisherX = org.asylum_media.statsync.integrations.punisherx.PunisherXAdapter.load(getServer());
+        if (punisherX == null) {
+            getLogger().warning("PunisherX API not available (PunisherX missing or API not registered).");
+        } else {
+            getLogger().info("PunisherX API loaded successfully.");
+        }
 
         beansObjective = getConfig().getString("economy.beans-objective", "Beans");
         getLogger().info("Using Beans scoreboard objective: " + beansObjective);

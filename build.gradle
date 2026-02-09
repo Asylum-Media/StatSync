@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.asylum_media'
-version = '0.1.14-SNAPSHOT'
+version = '0.1.15-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -23,12 +23,17 @@ repositories {
         name = "opencollab-snapshots"
         url = "https://repo.opencollab.dev/maven-snapshots"
     }
+    maven {
+        name = "syntaxdevteam-releases"
+        url = uri("https://nexus.syntaxdevteam.pl/repository/maven-releases/")
+    }
 }
 
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
+    compileOnly("pl.syntaxdevteam.punisher:PunisherX:1.6.0")
 }
 
 tasks {
