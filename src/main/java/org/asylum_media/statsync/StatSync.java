@@ -13,18 +13,24 @@ import java.util.UUID;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.asylum_media.statsync.punishments.PunishmentManager;
+
+
 // Floodgate API
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 public final class StatSync extends JavaPlugin {
 
+    private PunishmentManager punishmentManager;
     private final Map<UUID, Integer> sessionBeansStart = new HashMap<>();
     private String beansObjective;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        // Core Punishment Manager
+        this.punishmentManager = new PunishmentManager();
 
         beansObjective = getConfig().getString("economy.beans-objective", "Beans");
         getLogger().info("Using Beans scoreboard objective: " + beansObjective);
@@ -104,6 +110,9 @@ public final class StatSync extends JavaPlugin {
         setCPData(staff, "ccm_target_platform", platform);
         staff.sendMessage("§e[StatSync] §7Context synced for §f" + target.getName());
         return true;
+    }
+    public PunishmentManager getPunishmentManager() {
+        return punishmentManager;
     }
 
     private int getScoreboardValue(String objectiveName, Player player) {
