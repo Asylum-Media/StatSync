@@ -1,5 +1,6 @@
 package org.asylum_media.statsync;
 
+import org.asylum_media.statsync.integrations.punisherx.PunisherXAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,18 +26,30 @@ public final class StatSync extends JavaPlugin {
     private PunishmentManager punishmentManager;
     private final Map<UUID, Integer> sessionBeansStart = new HashMap<>();
     private String beansObjective;
+    private PunisherXAdapter punisherXAdapter;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        // Core Punishment Manager
+// Core Punishment Manager
         this.punishmentManager = new PunishmentManager();
-        var punisherX = org.asylum_media.statsync.integrations.punisherx.PunisherXAdapter.load(getServer());
-        if (punisherX == null) {
+
+// Load PunisherX API adapter
+        this.punisherXAdapter =
+                org.asylum_media.statsync.integrations.punisherx.PunisherXAdapter.load(getServer());
+
+        if (this.punisherXAdapter == null) {
             getLogger().warning("PunisherX API not available (PunisherX missing or API not registered).");
         } else {
             getLogger().info("PunisherX API loaded successfully.");
+
+            // TEMP probe (safe to remove later)
+            Bukkit.getOnlinePlayers().stream().findFirst().ifPresent(player -> {
+                getLogger().info("Probing PunisherX punishments for " + player.getName());
+                this.punisherXAdapter.logActivePunishments(player.getUniqueId());
+            });
         }
+
 
         beansObjective = getConfig().getString("economy.beans-objective", "Beans");
         getLogger().info("Using Beans scoreboard objective: " + beansObjective);
