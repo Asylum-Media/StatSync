@@ -60,16 +60,26 @@ public final class StatSync extends JavaPlugin {
             getLogger().warning("Floodgate not found. Platform data will be unavailable.");
         }
 
-        // Register session tracking listener
+// Register session tracking + PunisherX probe listener
         getServer().getPluginManager().registerEvents(new Listener() {
 
             @EventHandler
             public void onJoin(PlayerJoinEvent event) {
-                int beans = getScoreboardValue(beansObjective, event.getPlayer());
-                sessionBeansStart.put(event.getPlayer().getUniqueId(), beans);
+                Player player = event.getPlayer();
+
+                // Session Beans baseline
+                int beans = getScoreboardValue(beansObjective, player);
+                sessionBeansStart.put(player.getUniqueId(), beans);
+
+                // TEMP PunisherX probe
+                if (punisherXAdapter != null) {
+                    getLogger().info("Probing PunisherX punishments for " + player.getName());
+                    punisherXAdapter.logActivePunishments(player.getUniqueId());
+                }
             }
 
         }, this);
+
         // Seed session baseline for already-online players
         for (Player player : Bukkit.getOnlinePlayers()) {
             int beans = getScoreboardValue(beansObjective, player);

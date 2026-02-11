@@ -41,9 +41,11 @@ public final class PunisherXAdapter {
     }
 
     public void logActivePunishments(UUID playerUuid) {
-        api.getActivePunishments(playerUuid.toString(), "ALL")
+        System.out.println("[StatSync][PunisherX] Querying active punishments...");
+
+        api.getActivePunishments(playerUuid.toString(), "MUTE")
                 .thenAccept(punishments -> {
-                    System.out.println("[StatSync][PunisherX] Active punishments: " + punishments.size());
+                    System.out.println("[StatSync][PunisherX] Active punishments found: " + punishments.size());
 
                     punishments.forEach(p -> {
                         System.out.println(
@@ -55,8 +57,10 @@ public final class PunisherXAdapter {
                     });
                 })
                 .exceptionally(ex -> {
-                    System.err.println("[StatSync][PunisherX] API query failed: " + ex.getMessage());
+                    System.err.println("[StatSync][PunisherX] API query failed:");
+                    ex.printStackTrace();
                     return null;
                 });
     }
+
 }
