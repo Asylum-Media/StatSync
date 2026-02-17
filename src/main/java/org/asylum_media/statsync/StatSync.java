@@ -42,12 +42,6 @@ public final class StatSync extends JavaPlugin {
             getLogger().warning("PunisherX API not available (PunisherX missing or API not registered).");
         } else {
             getLogger().info("PunisherX API loaded successfully.");
-
-            // TEMP probe (safe to remove later)
-            Bukkit.getOnlinePlayers().stream().findFirst().ifPresent(player -> {
-                getLogger().info("Probing PunisherX punishments for " + player.getName());
-                this.punisherXAdapter.logActivePunishments(player.getUniqueId());
-            });
         }
 
 
@@ -71,13 +65,19 @@ public final class StatSync extends JavaPlugin {
                 int beans = getScoreboardValue(beansObjective, player);
                 sessionBeansStart.put(player.getUniqueId(), beans);
 
-                // TEMP PunisherX probe
+                // Fetch punishments from PunisherX
                 if (punisherXAdapter != null) {
-                    getLogger().info("Probing PunisherX punishments for " + player.getName());
-                    punisherXAdapter.logActivePunishments(player.getUniqueId());
+                    punisherXAdapter.fetchActivePunishments(
+                            player.getUniqueId(),
+                            record -> {
+                                punishmentManager.recordPunishment(record);
+                                getLogger().info("Recorded punishment: "
+                                        + record.getType()
+                                        + " for " + player.getName());
+                            }
+                    );
                 }
             }
-
         }, this);
 
         // Seed session baseline for already-online players

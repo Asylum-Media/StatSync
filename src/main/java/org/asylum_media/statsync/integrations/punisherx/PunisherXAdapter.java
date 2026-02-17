@@ -3,7 +3,14 @@ package org.asylum_media.statsync.integrations.punisherx;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 import pl.syntaxdevteam.punisher.api.PunisherXApi;
+
+import java.time.Instant;
 import java.util.UUID;
+import java.util.function.Consumer;
+
+import org.asylum_media.statsync.punishments.PunishmentRecord;
+import org.asylum_media.statsync.punishments.PunishmentType;
+import org.asylum_media.statsync.punishments.PunishmentSeverity;
 
 public final class PunisherXAdapter {
 
@@ -18,49 +25,45 @@ public final class PunisherXAdapter {
         return (api == null) ? null : new PunisherXAdapter(api);
     }
 
-    public PunisherXApi api() {
-        return api;
-    }
-    public void logLastTenPunishments(UUID playerUuid) {
-        api.getLastTenActivePunishments(playerUuid.toString())
-                .thenAccept(punishments -> {
-                    System.out.println("[StatSync][PunisherX] Active punishments: " + punishments.size());
-                    punishments.forEach(p -> {
-                        System.out.println(
-                                "Type=" + p.getType()
-                                        + " Reason=" + p.getReason()
-                                        + " Operator=" + p.getOperator()
-                                        + " End=" + p.getEnd()
-                        );
-                    });
-                })
-                .exceptionally(ex -> {
-                    System.err.println("[StatSync][PunisherX] API query failed: " + ex.getMessage());
-                    return null;
-                });
-    }
+    public void fetchActivePunishments(UUID playerUuid, Consumer<PunishmentRecord> consumer) {
 
-    public void logActivePunishments(UUID playerUuid) {
-        System.out.println("[StatSync][PunisherX] Querying active punishments...");
-
-        api.getActivePunishments(playerUuid.toString(), "MUTE")
+        api.getActivePunishments(playerUuid.toString(), "ALL")
                 .thenAccept(punishments -> {
-                    System.out.println("[StatSync][PunisherX] Active punishments found: " + punishments.size());
 
                     punishments.forEach(p -> {
-                        System.out.println(
-                                "Type=" + p.getType()
-                                        + " Reason=" + p.getReason()
-                                        + " Operator=" + p.getOperator()
-                                        + " End=" + p.getEnd()
+
+                        PunishmentType type = switch (p.getType().toUpperCase()) {
+                            case "MUTE" -> PunishmentType.MUTE;
+                            case "JAIL" -> PunishmentType.JAIL;
+                            case "BAN" -> PunishmentType.PERM_BAN;
+                            default -> PunishmentType.WARN;
+                        };
+
+                        long end = p.getEnd();
+                        Instant expiresAt = (end > 0)
+                                ? Instant.ofEpochMilli(end)
+                                : null;
+
+                        PunishmentRecord record = new PunishmentRecord(
+                                UUID.randomUUID(),
+                                playerUuid,
+                                type,
+                                PunishmentSeverity.defaultWeight(type),
+                                "PunisherX",
+                                p.getReason(),
+                                p.getOperator(),
+                                Instant.now(),
+                                expiresAt,
+                                true
                         );
+
+                        consumer.accept(record);
                     });
+
                 })
                 .exceptionally(ex -> {
-                    System.err.println("[StatSync][PunisherX] API query failed:");
                     ex.printStackTrace();
                     return null;
                 });
     }
-
 }
