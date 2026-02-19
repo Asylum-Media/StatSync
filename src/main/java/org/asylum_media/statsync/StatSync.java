@@ -60,9 +60,7 @@ public final class StatSync extends JavaPlugin {
             @EventHandler
             public void onJoin(PlayerJoinEvent event) {
                 Player player = event.getPlayer();
-                getLogger().info("JOIN EVENT FIRED for " + player.getName());
-                getLogger().info("Adapter is " + (punisherXAdapter == null ? "NULL" : "NOT NULL"));
-                getLogger().info("Calling fetchActivePunishments...");
+                getLogger().info("Recorded punishment: ...");
 
                 // Session Beans baseline
                 int beans = getScoreboardValue(beansObjective, player);
