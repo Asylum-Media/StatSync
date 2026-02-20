@@ -27,7 +27,7 @@ public final class PunisherXAdapter {
 
     public void fetchActivePunishments(UUID playerUuid, Consumer<PunishmentRecord> consumer) {
 
-        api.getActivePunishments(playerUuid.toString(), "ALL")
+        api.getLastTenActivePunishments(playerUuid.toString())
                 .thenAccept(punishments -> {
                     if (punishments.isEmpty()) {
                         System.out.println("[StatSync][PunisherX] No active punishments.");
