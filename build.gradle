@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.asylum_media'
-version = '0.1.24-SNAPSHOT'
+version = '0.1.25-SNAPSHOT'
 
 repositories {
     mavenCentral()

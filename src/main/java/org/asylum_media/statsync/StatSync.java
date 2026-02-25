@@ -138,6 +138,12 @@ public final class StatSync extends JavaPlugin {
         setCPData(staff, "ccm_target_beans_session", String.valueOf(beansDelta));
 
         setCPData(staff, "ccm_target_platform", platform);
+        // Punishment context
+        long activeCount = punishmentManager.getActivePunishmentCount(target.getUniqueId());
+        int severity = punishmentManager.getTotalActiveSeverity(target.getUniqueId());
+
+        setCPData(staff, "ccm_target_punishments_active", String.valueOf(activeCount));
+        setCPData(staff, "ccm_target_punishments_severity", String.valueOf(severity));
         staff.sendMessage("§e[StatSync] §7Context synced for §f" + target.getName());
         return true;
     }
